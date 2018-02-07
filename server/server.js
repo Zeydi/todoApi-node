@@ -1,4 +1,4 @@
-require('./config/config');
+require('./config/config.js');
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -25,6 +25,8 @@ app.post('/todos', (req, res) => {
 });
 
 app.get('/todos', (req, res) => {
+  res.send('Hello world!')
+  console.log('dooooooooooooooooooooooooone')
   Todo.find().then((todos) => {
     res.send({todos});
   }, (e) => {
