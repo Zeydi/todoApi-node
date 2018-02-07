@@ -118,3 +118,36 @@ describe('DELETE/todos/:id', () => {
       .end(done);
   })
 });
+
+describe('PATCH/todos/:id', () => {
+  it('should update a todo', (done) => {
+     const hexId = todos[0]._id.toHexString();
+     const modified = {
+      text : 'new todo',
+      completed: true
+    }
+    request(app)
+      .patch(`/todos/${hexId}`)
+      .send(modified)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.todo.text).toEqual(modified.text)
+      })
+      .end(done);
+  });
+  it('should clear completedAt when to do is not completed', (done) =>{
+    const hexId = todos[0]._id.toHexString();
+    const modified = {
+     text : 'new todo',
+     completed: false
+    }
+    request(app)
+      .patch(`/todos/${hexId}`)
+      .send(modified)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.todo.completedAt).toNotExist();
+      })
+      .end(done);
+  })
+})
