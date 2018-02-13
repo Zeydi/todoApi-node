@@ -17,17 +17,24 @@ const users = [{
 }, {
   _id: userTwoId,
   email: 'user2@exple.com',
-  password: 'passwordTwo'
-}]
+  password: 'passwordTwo',
+  tokens: [{
+    access: 'auth',
+    token: jwt.sign({_id: userTwoId.toHexString(), access: 'auth'}, 'abc123').toString()
+
+  }]
+}];
 
 
 
 const todos = [{
   _id: new ObjectID(),
-  text: 'first todo'
+  text: 'first todo',
+  _creator: userOneId
 }, {
   _id: new ObjectID(),
-  text: 'second todo'
+  text: 'second todo',
+  _creator: userTwoId
 }];
 
 const populateTodos = (done) => {
